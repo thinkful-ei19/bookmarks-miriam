@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+button, input[type="text"], input[type="submit"] ,textarea{
+  padding: 5px;
+  font-size: 11px;
+  margin: 10px;
+}
+
+input[type="radio"] {
+  font-size: 10px;
+}
+.js-bookmark-list-title{
+  width: 100px;
+}
+
+.js-bookmark-list-url{
+  width: 300px;
+}
+
+label{
+  padding: 5px;
+  font-size: 15px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.bookmark-item {
+  width: 450px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bookmarks-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.bookmark-item{
+  color: grey;
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 15px;
+  border: 1px solid grey;
+  padding: 20px;
+}
+
+.shopping-item__checked {
+  text-decoration: line-through;
+}
