@@ -12,21 +12,27 @@
 </head>
 
 <body>
-  <h1>Bookmarks</h1>
+  <h1>Bookmarks Organizer</h1>
   <div class="container">
+
+
+     
+              
 
     <section class="bookmark-controls">
       <button id="addItemButton">Add Bookmark</button>
-      <!-- Search with minimum rating
+  
       
-      <select>
-  <option value="1">*</option>
-  <option value="2">**</option>
-   
-    </select>
+      <!-- <select>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+           
+            </select>
+       -->
       
-      
-      !-->
 
       <form class="hidden" id="js-bookmark-form">
         <label for="js-bookmark-form-label">Create a Bookmark</label>
@@ -59,7 +65,7 @@
         </div>
         
         <button id="submitItemButton" title="Click to submit your bookmark" type="submit">Submit</button>
-
+        <input type="button" id="cancelButton" value="Cancel"></button>
 
 
         <!-- <input title="Click to submit your bookmark" type="submit" value="Submit Bookmark" /> -->
@@ -73,6 +79,7 @@
         <header>
           <span class="header-text">Article on Cats</span>
           <button class="remove-bookmark-button">X</button>
+ 
         </header>
         <article>
           <p class="description">

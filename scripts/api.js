@@ -26,9 +26,24 @@ const api = (function () {
 
   };
 
+  const deleteItem = function(id, callback) {
+    console.log('bin deleteItem id =', id);
+    // const newBookmark = JSON.stringify(bookmark);
+    // console.log("after stringify", newBookmark);
+    $.ajax({
+      url: BASE_URL + '/'+ id,
+      method: 'DELETE',
+      dataType: 'json',
+      contentType: 'application/json',
+      success: callback 
+    });
+
+  };
+
   return {
     getItems,
     createItem,
+    deleteItem
 
   };
 }());
