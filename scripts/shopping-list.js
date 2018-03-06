@@ -27,16 +27,18 @@ function hideBookmarkForm() {
 
 const shoppingList = (function () {
   function generateItemElement(item) {
-    var rating  = item.rating;
-    var ratingString="";
-    for(var i=1; i<= item.rating; i++)
-       ratingString += " <span>&#x2605</span>";
+    console.log('***** generating new item ****');
+    var rating = item.rating;
+    var ratingString = "";
+    for (var i = 1; i <= item.rating; i++)
+      ratingString += " <span>&#x2605</span>";
 
-     for(var i=item.rating; i< 5; i++)
-       ratingString += " <span>&#x2606</span>";
-    
+    for (var i = item.rating; i < 5; i++)
+      ratingString += " <span>&#x2606</span>";
+
 
     return `
+    console.log()
     <li class="bookmark-item" data-item-id="${item.id}">
     <header class="bookmark-header">
       <span class="header-text">${item.title}</span>
@@ -63,9 +65,9 @@ const shoppingList = (function () {
 
   function handleHeaderClick() {
     $('.js-bookmarks-list').on('click', '.bookmark-header', event => {
-       $(event.currentTarget).next("article").toggleClass("hidden");
-  });
-}
+      $(event.currentTarget).next("article").toggleClass("hidden");
+    });
+  }
 
   function render() {
     // Filter item list if store prop is true by item.checked === false
@@ -109,6 +111,7 @@ const shoppingList = (function () {
       //store.addItem(newItemName);
       api.createItem(bookmark, () => {
         store.addItem(bookmark);
+        console.log("new item = ", bookmark);
         render();
       });
 
@@ -139,13 +142,13 @@ const shoppingList = (function () {
       // delete the item
 
       //store.addItem(newItemName);
-        api.deleteItem(id, () => {
+      api.deleteItem(id, () => {
         store.findAndDelete(id);
-  
+
         // render the updated shopping list
-      render();
+        render();
       });
-     });
+    });
   }
 
   function handleEditShoppingItemSubmit() {
