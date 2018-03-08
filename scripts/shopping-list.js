@@ -6,28 +6,28 @@
 // eslint-disable-next-line no-unused-vars
 
 $("#addItemButton").click(function () {
-  displayBookmarkForm();
+  displayItemForm();
 })
 $("#submitItemButton").click(function () {
-  hideBookmarkForm();
+  hideItemForm();
 
 })
 $("#cancelButton").click(function () {
-  hideBookmarkForm();
+  hideItemForm();
 })
 
-function displayBookmarkForm() {
+function displayItemForm() {
   $("#js-bookmark-form").removeClass("hidden");
   $("#addItemButton").addClass("hidden");
 }
 
-function hideBookmarkForm() {
+function hideItemForm() {
   $("#addItemButton").removeClass("hidden");
   $("#js-bookmark-form").addClass("hidden");
 }
 
 
-const shoppingList = (function () {
+const itemList = (function () {
   function generateItemElement(item) {
     console.log('***** generateItemElement ****');
     var rating = item.rating;
@@ -59,13 +59,12 @@ const shoppingList = (function () {
   </li>`;
   }
   // Use a better naming convention eg. Bookmarks
-  function generateShoppingItemsString(shoppingList) {
-    const items = shoppingList.map((item) => generateItemElement(item));
+  function generateItemsString(itemList) {
+    const items = itemList.map((item) => generateItemElement(item));
     return items.join('');
   }
 
   function handleHeaderClick() {
-    console.log('***** handleHeaderClick ****');
     $('.js-bookmarks-list').on('click', '.bookmark-header', event => {
       $(event.currentTarget).next("article").toggleClass("hidden");
     });
@@ -81,10 +80,10 @@ const shoppingList = (function () {
     // }
 
     // render the shopping list in the DOM
-    const shoppingListItemsString = generateShoppingItemsString(items);
+    const listItemsString = generateItemsString(items);
 
     // insert that HTML into the DOM
-    $('.bookmarks-list').html(shoppingListItemsString);
+    $('.bookmarks-list').html(listItemsString);
   }
 
   function handleNewItemSubmit() {
@@ -102,14 +101,14 @@ const shoppingList = (function () {
 
       const rating = $('input:radio[name="bookmark-rating"]:checked').val();
 
-      let bookmark = {};
-      bookmark.title = title;
-      bookmark.url = url;
-      bookmark.desc = description;
-      bookmark.rating = rating;
+      let item = {};
+      item.title = title;
+      item.url = url;
+      item.desc = description;
+      item.rating = rating;
 
       //store.addItem(newItemName);
-      api.createItem(bookmark, (response) => {
+      api.createItem(item, (response) => {
         store.addItem(response);
         console.log("new item = ", response);
         render();
@@ -146,7 +145,7 @@ const shoppingList = (function () {
     });
   }
 
-  function handleEditShoppingItemSubmit() {
+  function handleEditItemSubmit() {
     $('.js-shopping-list').on('submit', '#js-edit-item', event => {
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
@@ -163,7 +162,7 @@ const shoppingList = (function () {
     });
   }
 
-  function handleShoppingListSearch() {
+  function handleListSearch() {
     $('.js-shopping-list-search-entry').on('keyup', event => {
       const val = $(event.currentTarget).val();
       store.setSearchTerm(val);
@@ -175,9 +174,9 @@ const shoppingList = (function () {
     handleNewItemSubmit();
     // handleItemCheckClicked();
     handleDeleteItemClicked();
-    handleEditShoppingItemSubmit();
+    handleEditItemSubmit();
     handleToggleFilterClick();
-    handleShoppingListSearch();
+    handleListSearch();
     handleHeaderClick();
   }
 

@@ -4,11 +4,23 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  text-shadow: 1px;
 }
 
 h1 {
   font-size: 20 px;
   text-align: center;
+}
+
+#js-bookmark-form {
+    width: 100%;
+    background-color: #a3c8d4;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 button, input[type="text"],input[type="button"], input[type="submit"] ,textarea{
@@ -39,7 +51,6 @@ label{
     font-size: 14px;
 }
 
-
 button:hover {
   cursor: pointer;
 }
@@ -57,7 +68,6 @@ button:hover {
   list-style: none;
   padding-left: 0;
 }
-
 
 .bookmark-item{
   color: grey;

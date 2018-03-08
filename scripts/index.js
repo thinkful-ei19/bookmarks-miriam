@@ -1,8 +1,8 @@
 /* global shoppingList, store, Item, api */
 'use strict';
 $(document).ready(function() {
-  shoppingList.bindEventListeners();
-  shoppingList.render();
+  itemList.bindEventListeners();
+  itemList.render();
 });
 
 
@@ -20,5 +20,5 @@ $(document).ready(function() {
 
 api.getItems((items) => {
   items.forEach((item) => store.addItem(item));
-  shoppingList.render();
+  itemList.render();
 });
