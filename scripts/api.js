@@ -11,31 +11,28 @@ const api = (function () {
       });
   };
 
-  const createItem = function(bookmark, callback) {
-    console.log('before stringify bookmark=', bookmark);
+  const createItem = function (bookmark, callback) {
     const newBookmark = JSON.stringify(bookmark);
-    console.log("after stringify", newBookmark);
     $.ajax({
       url: BASE_URL,
       method: 'POST',
       dataType: 'json',
       contentType: 'application/json',
       data: newBookmark,
-      success: callback 
+      success: callback
     });
-
   };
 
-  const deleteItem = function(id, callback) {
+  const deleteItem = function (id, callback) {
     console.log('bin deleteItem id =', id);
     // const newBookmark = JSON.stringify(bookmark);
     // console.log("after stringify", newBookmark);
     $.ajax({
-      url: BASE_URL + '/'+ id,
+      url: BASE_URL + '/' + id,
       method: 'DELETE',
       dataType: 'json',
       contentType: 'application/json',
-      success: callback 
+      success: callback
     });
 
   };

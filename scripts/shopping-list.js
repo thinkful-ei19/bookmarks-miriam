@@ -1,4 +1,5 @@
 'use strict';
+
 /* global store */
 //<button  id="add" >Add Bookmark</button>
 
@@ -25,9 +26,10 @@ function hideBookmarkForm() {
   $("#js-bookmark-form").addClass("hidden");
 }
 
+
 const shoppingList = (function () {
   function generateItemElement(item) {
-    console.log('***** generating new item ****');
+    console.log('***** generateItemElement ****');
     var rating = item.rating;
     var ratingString = "";
     for (var i = 1; i <= item.rating; i++)
@@ -38,7 +40,6 @@ const shoppingList = (function () {
 
 
     return `
-    console.log()
     <li class="bookmark-item" data-item-id="${item.id}">
     <header class="bookmark-header">
       <span class="header-text">${item.title}</span>
@@ -64,6 +65,7 @@ const shoppingList = (function () {
   }
 
   function handleHeaderClick() {
+    console.log('***** handleHeaderClick ****');
     $('.js-bookmarks-list').on('click', '.bookmark-header', event => {
       $(event.currentTarget).next("article").toggleClass("hidden");
     });
@@ -79,7 +81,6 @@ const shoppingList = (function () {
     // }
 
     // render the shopping list in the DOM
-    console.log('`render` ran');
     const shoppingListItemsString = generateShoppingItemsString(items);
 
     // insert that HTML into the DOM
@@ -89,7 +90,6 @@ const shoppingList = (function () {
   function handleNewItemSubmit() {
     $('#js-bookmark-form').submit(function (event) {
       event.preventDefault();
-
       const title = $('.js-bookmark-list-title').val();
       $('.js-bookmark-list-title').val('');
 
@@ -109,9 +109,9 @@ const shoppingList = (function () {
       bookmark.rating = rating;
 
       //store.addItem(newItemName);
-      api.createItem(bookmark, () => {
-        store.addItem(bookmark);
-        console.log("new item = ", bookmark);
+      api.createItem(bookmark, (response) => {
+        store.addItem(response);
+        console.log("new item = ", response);
         render();
       });
 
@@ -133,18 +133,13 @@ const shoppingList = (function () {
   // }
 
   function handleDeleteItemClicked() {
-    // like in ` handleItemCheckClicked`, we use event delegation
     $('.js-bookmarks-list').on('click', '.remove-bookmark-button', event => {
-      console.log('In handleDelete');
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
-      console.log('THis should be the id of the current target', id);
       // delete the item
-
-      //store.addItem(newItemName);
-      api.deleteItem(id, () => {
+      api.deleteItem(id, (response) => {
+        console.log(response);
         store.findAndDelete(id);
-
         // render the updated shopping list
         render();
       });
