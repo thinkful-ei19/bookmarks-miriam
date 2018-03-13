@@ -8,22 +8,37 @@
 $("#addItemButton").click(function () {
   displayItemForm();
 })
-$("#submitItemButton").click(function () {
-  hideItemForm();
 
-})
 $("#cancelButton").click(function () {
   hideItemForm();
 })
 
 function displayItemForm() {
   $("#js-bookmark-form").removeClass("hidden");
+  $('#min-rating-dropdown').addClass("hidden");
   $("#addItemButton").addClass("hidden");
 }
-
 function hideItemForm() {
   $("#addItemButton").removeClass("hidden");
+  if (store.items.length > 0) {
+    $('#min-rating-dropdown').removeClass("hidden");
+  }
   $("#js-bookmark-form").addClass("hidden");
+}
+
+function displayMinimumRating(){
+  if (store.items.length > 0) {
+    $('#min-rating-dropdown').removeClass("hidden");
+  } else {
+    $('#min-rating-dropdown').addClass("hidden");
+  }
+
+
+  // if ( $('#min-rating-dropdown').hasClass("hidden") && store.items.length > 0){
+  //   $('#min-rating-dropdown').removeClass("hidden");
+  // } else {
+  //   $('#min-rating-dropdown').addClass("hidden");
+  // }
 }
 
 
@@ -84,6 +99,8 @@ const itemList = (function () {
 
     // insert that HTML into the DOM
     $('.bookmarks-list').html(listItemsString);
+
+    displayMinimumRating();
   }
 
   function handleNewItemSubmit() {
@@ -94,6 +111,14 @@ const itemList = (function () {
 
       const url = $('.js-bookmark-list-url').val();
       $('.js-bookmark-list-url').val('');
+
+      
+      if(!title || !title.trim() || !url || !url.trim()) {
+        $('.error').show();
+        return false;
+      }
+
+      hideItemForm();
 
       const description = $('.js-bookmark-list-description').val();
       $('.js-bookmark-list-description').val('');
@@ -178,6 +203,7 @@ const itemList = (function () {
     handleToggleFilterClick();
     handleListSearch();
     handleHeaderClick();
+    
   }
 
   // This object contains the only exposed methods from this module:

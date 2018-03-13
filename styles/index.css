@@ -23,10 +23,33 @@ h1 {
     cursor: pointer;
 }
 
-button, input[type="text"],input[type="button"], input[type="submit"] ,textarea{
+button, input[type="text"],input[type="button"], input[type="submit"], textarea {
   padding: 5px;
-  font-size: 11px;
+  font-size: 12px;
   margin: 10px;
+  border-radius: 4px;
+}
+
+#min-rating-dropdown {
+  padding: 5px;
+  font-size: 12px;
+  margin: 10px;
+  border: 1px solid #979997;
+}
+
+select {
+  padding: 1px 5px;
+  border: 1px solid #979997;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+
+  /* -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px; */
+  border-radius: 4px;
 }
 
 input[type="radio"] {
@@ -49,6 +72,11 @@ label{
 .remove-bookmark-button {
     float: right;
     font-size: 14px;
+}
+
+.error {
+  color: red;
+  margin: 0;
 }
 
 button:hover {
