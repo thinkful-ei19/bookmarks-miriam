@@ -71,14 +71,9 @@ label {
   font-size: 15px;
   margin: 10px;
   font-weight: bold;
-  text-shadow: 2px 2px #545050;
+  text-shadow: 1px 1px #585757;
   /* text-shadow: 2px 2px solid black; */
 }
-
-/* #js-bookmark-form-label {
-  font-size: 15px;
-  text-shadow: 2px 2px solid black;
-} */
 
 .remove-bookmark-button {
     float: right;
