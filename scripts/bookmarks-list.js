@@ -14,6 +14,7 @@ $("#cancelButton").click(function () {
 })
 
 function displayItemForm() {
+  $(".js-bookmark-list-rating").prop("checked", false);
   $("#js-bookmark-form").removeClass("hidden");
   $('#min-rating-dropdown').addClass("hidden");
   $("#addItemButton").addClass("hidden");
@@ -61,9 +62,11 @@ const itemList = (function () {
     <button class= "remove-bookmark-button">X</button>
     </header>
     <article class="hidden">
-    <span>Visit site: </span> <a href="{item.url}" >${item.url}</a> 
       <p class="description">
         ${item.desc}
+      </p>
+      <p>
+        <span>Visit site: </span><a href="${item.url}" target="_blank">${item.url}</a>
       </p>
     </article>
     <div class="rating">
@@ -93,6 +96,12 @@ const itemList = (function () {
     // if (store.searchTerm) {
     //   items = store.items.filter(item => item.name.includes(store.searchTerm));
     // }
+    //
+    // Filter item list if minimum rating is non-null
+    if (store.minRating !== undefined) {
+       items = store.items.filter(item => item.rating >= store.minRating);
+    }
+
 
     // render the shopping list in the DOM
     const listItemsString = generateItemsString(items);
@@ -180,11 +189,21 @@ const itemList = (function () {
     });
   }
 
-  function handleToggleFilterClick() {
+  function handleNoteContentToggle() {
     $('.js-filter-checked').click(() => {
       store.toggleCheckedFilter();
       render();
     });
+  }
+
+  function handleMinimumRatingChange() {
+    $('#min-rating-dropdown').on('change', event => {
+      // change event returns a js event so
+      // already contains a value
+      store.minRating = parseInt(event.currentTarget.value,10);
+      console.log('In change rating = ', store.displayMinimumRatingating);
+      render();
+    })
   }
 
   function handleListSearch() {
@@ -200,7 +219,8 @@ const itemList = (function () {
     // handleItemCheckClicked();
     handleDeleteItemClicked();
     handleEditItemSubmit();
-    handleToggleFilterClick();
+    handleNoteContentToggle();
+    handleMinimumRatingChange();
     handleListSearch();
     handleHeaderClick();
     
