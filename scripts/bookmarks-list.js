@@ -1,5 +1,4 @@
 'use strict';
-
 /* global store */
 //<button  id="add" >Add Bookmark</button>
 
@@ -10,7 +9,9 @@ $("#addItemButton").click(function () {
 })
 
 $("#cancelButton").click(function () {
-  hideItemForm();
+  if(store.items.length) {
+    hideItemForm();
+  }
 })
 
 function displayItemForm() {
@@ -27,25 +28,18 @@ function hideItemForm() {
   $("#js-bookmark-form").addClass("hidden");
 }
 
-function displayMinimumRating(){
+function displayMinimumRating() {
   if (store.items.length > 0) {
     $('#min-rating-dropdown').removeClass("hidden");
   } else {
     $('#min-rating-dropdown').addClass("hidden");
   }
-
-
-  // if ( $('#min-rating-dropdown').hasClass("hidden") && store.items.length > 0){
-  //   $('#min-rating-dropdown').removeClass("hidden");
-  // } else {
-  //   $('#min-rating-dropdown').addClass("hidden");
-  // }
 }
-
 
 const itemList = (function () {
   function generateItemElement(item) {
     console.log('***** generateItemElement ****');
+    //
     var rating = item.rating;
     var ratingString = "";
     for (var i = 1; i <= item.rating; i++)
@@ -60,6 +54,7 @@ const itemList = (function () {
     <header class="bookmark-header">
       <span class="header-text">${item.title}</span>
     <button class= "remove-bookmark-button">X</button>
+    <button class= "edit-bookmark-item">Edit</button>
     </header>
     <article class="hidden">
       <p class="description">
@@ -99,7 +94,7 @@ const itemList = (function () {
     //
     // Filter item list if minimum rating is non-null
     if (store.minRating !== undefined) {
-       items = store.items.filter(item => item.rating >= store.minRating);
+      items = store.items.filter(item => item.rating >= store.minRating);
     }
 
 
@@ -110,10 +105,17 @@ const itemList = (function () {
     $('.bookmarks-list').html(listItemsString);
 
     displayMinimumRating();
+    if (!store.items.length) {
+      displayItemForm()
+      $('#cancelButton').hide();
+    } else {
+      $('#cancelButton').show();
+    }
   }
 
   function handleNewItemSubmit() {
     $('#js-bookmark-form').submit(function (event) {
+      console.log('e', event);
       event.preventDefault();
       const title = $('.js-bookmark-list-title').val();
       $('.js-bookmark-list-title').val('');
@@ -121,8 +123,8 @@ const itemList = (function () {
       const url = $('.js-bookmark-list-url').val();
       $('.js-bookmark-list-url').val('');
 
-      
-      if(!title || !title.trim() || !url || !url.trim()) {
+
+      if (!title || !title.trim() || !url || !url.trim()) {
         $('.error').show();
         return false;
       }
@@ -200,7 +202,7 @@ const itemList = (function () {
     $('#min-rating-dropdown').on('change', event => {
       // change event returns a js event so
       // already contains a value
-      store.minRating = parseInt(event.currentTarget.value,10);
+      store.minRating = parseInt(event.currentTarget.value, 10);
       console.log('In change rating = ', store.displayMinimumRatingating);
       render();
     })
@@ -223,7 +225,7 @@ const itemList = (function () {
     handleMinimumRatingChange();
     handleListSearch();
     handleHeaderClick();
-    
+
   }
 
   // This object contains the only exposed methods from this module:
