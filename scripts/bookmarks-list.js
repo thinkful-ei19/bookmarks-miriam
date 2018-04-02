@@ -121,7 +121,7 @@ const itemList = (function () {
         </div>
 
         <button title="Click to submit your bookmark" type="submit">Submit</button>
-        <button type="button" onclick="window.location.href='/'">Cancel</button>
+        <button type="button" onclick='window.location.href="${window.location.href}"'>Cancel</button>
       `
   }
 
