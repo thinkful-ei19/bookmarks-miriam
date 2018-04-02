@@ -14,6 +14,7 @@
 <body>
   <header role="banner">
     <h1>Bookmarks Organizer</h1>
+    <h2>Managing your URL needs since March 2018</h2>
   </header>
   <div class="container">
     <section role="region" class="bookmark-controls">
@@ -21,12 +22,13 @@
 
       <select class="hidden" name="min-rating" id="min-rating-dropdown">
         <option class="options" value="0">Minimum Rating</option>
-          <option value="5">5 Star</option>
-          <option value="4">4 Star</option>
-          <option value="3">3 Star</option>
-          <option value="2">2 Star</option>
-          <option value="1">1 Star</option>
+        <option value="5">5 Star</option>
+        <option value="4">4 Star</option>
+        <option value="3">3 Star</option>
+        <option value="2">2 Star</option>
+        <option value="1">1 Star</option>
       </select>
+
 
       <form class="hidden" id="js-bookmark-form">
         <div class="side1">
@@ -38,7 +40,6 @@
           <!-- <p class="error hidden">Enter title and valid url</p> -->
           <br>
           <textarea name="bookmark-description" rows="10" cols="80" title="Description" class="js-bookmark-list-description" placeholder="e.g., longer description here"></textarea>
-          
         </div>
 
         <div class="side2">
@@ -61,36 +62,30 @@
           <input type="radio" id="rating1" name="bookmark-rating" class="js-bookmark-list-rating" value="1"></input>
         </div>
 
-  <button id="submitItemButton" title="Click to submit your bookmark" type="submit">Submit</button>
-  <input role='button' type="button" id="cancelButton" value="Cancel" />
-  </button>
+        <button id="submitItemButton" name="add" title="Click to submit your bookmark" type="submit">Submit</button>
+        <input role='button' type="button" id="cancelButton" value="Cancel" />
+      </form>
+
+    </section>
+    <section role='region' class="bookmark-list">
+      <ul class="bookmarks-list js-bookmarks-list">
+        <li class="hidden bookmark-item">
+          <header>
+            <span class="header-text">Article on Cats</span>
+            <button class="remove-bookmark-button">X</button>
+            <button class="edit-bookmark-item" name="edit">Edit</button>
+          </header>
+          <article>
+            <p class="description">
+              The Lion in the Living
+            </p>
+          </article>
 
 
 
-  <!-- <input title="Click to submit your bookmark" type="submit" value="Submit Bookmark" /> -->
-
-  </form>
-
-  </section>
-  <section role='region' class="bookmark-list">
-    <ul class="bookmarks-list js-bookmarks-list">
-      <li class="hidden bookmark-item">
-        <header>
-          <span class="header-text">Article on Cats</span>
-          <button class="remove-bookmark-button">X</button>
-          <button class="edit-bookmark-item">Edit</button>
-        </header>
-        <article>
-          <p class="description">
-            The Lion in the Living
-          </p>
-        </article>
-
-
-
-      </li>
-    </ul>
-  </section>
+        </li>
+      </ul>
+    </section>
   </div>
 
 

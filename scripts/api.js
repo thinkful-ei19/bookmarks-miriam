@@ -23,6 +23,18 @@ const api = (function () {
     });
   };
 
+  const editItem = function (id, newBookmarkData, callback) {
+    delete newBookmarkData.id
+    $.ajax({
+      url: BASE_URL + '/' + id,
+      method: 'PATCH',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(newBookmarkData),
+      success: callback
+    });
+  };  
+
   const deleteItem = function (id, callback) {
     console.log('bin deleteItem id =', id);
     // const newBookmark = JSON.stringify(bookmark);
@@ -40,7 +52,7 @@ const api = (function () {
   return {
     getItems,
     createItem,
-    deleteItem
-
+    deleteItem,
+    editItem
   };
 }());

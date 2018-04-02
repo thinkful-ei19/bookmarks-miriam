@@ -9,6 +9,12 @@ const store = (function(){
     //}
   };
 
+  const editItem = function(item) {
+    const bookmark = this.findById(item.id);
+    const itemIndex = this.items.indexOf(bookmark);
+    this.items.splice(itemIndex, 1, item);
+  };  
+
   const findById = function(id) {
     return this.items.find(item => item.id === id);
   };
@@ -46,6 +52,7 @@ const store = (function(){
     searchTerm: '',
 
     addItem,
+    editItem,
     findById,
     findAndToggleChecked,
     findAndDelete,
