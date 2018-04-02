@@ -12,6 +12,7 @@ $("#addItemButton").click(function () {
 $("#cancelButton").click(function () {
   console.log('* clicked cancelButton to hideItemForm *');
   if (store.items.length) {
+    $('#min-rating-dropdown').removeClass("hidden");
     hideItemForm();
   }
 })
