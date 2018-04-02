@@ -68,7 +68,7 @@ const itemList = (function () {
     <header class="bookmark-header">
       <span class="header-text">${item.title}</span>
     <button class= "remove-bookmark-button">X</button>
-    <button class= "edit-bookmark-item">Edit</button>
+    <button class= "edit-bookmark-item"><i class="far fa-edit"></i></button>
     </header>
     <article class="hidden">
       <p class="description">
