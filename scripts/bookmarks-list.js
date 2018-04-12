@@ -92,7 +92,7 @@ const itemList = (function () {
         <div class="side1">
           <input type="hidden" value=${item.id} name="bookmark-id" class="js-bookmark-list-id"/>
           <br>
-          <input type="text" value=${item.title} name="bookmark-title" title="Title" class="js-bookmark-list-title" placeholder="e.g., Title" required/>
+          <input type="text" value="${item.title}" name="bookmark-title" title="Title" class="js-bookmark-list-title" placeholder="e.g., Title" required/>
 
           <input type="text" value=${item.url} name="bookmark-url" title="URL" class="js-bookmark-list-url" placeholder="e.g., http://google.com" required/>
 
