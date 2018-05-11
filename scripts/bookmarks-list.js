@@ -5,12 +5,10 @@
 
 $("#addItemButton").click(function () {
   $('#min-rating-dropdown').val("0").change();
-  console.log('* clicked addItemButton do call function displayItemForm *');
-  displayItemForm();
+   displayItemForm();
 })
 
 $("#cancelButton").click(function () {
-  console.log('* clicked cancelButton to hideItemForm *');
   if (store.items.length) {
     $('#min-rating-dropdown').removeClass("hidden");
     hideItemForm();
@@ -21,19 +19,19 @@ $('#min-rating-dropdown').on('change', event => {
   // change event returns a js event so
   // already contains a value
   store.minRating = parseInt(event.currentTarget.value, 10);
-  console.log('In change rating = ', store.minRating);
   itemList.render();
 })
 
 function displayItemForm() {
-  console.log('*** function displayItemForm ***');
   $(".js-bookmark-list-rating").prop("checked", false);
+  // $("#js-bookmark-form").show();
+  // $('#min-rating-dropdown').hide();
+  // $("#addItemButton").hide();
   $("#js-bookmark-form").removeClass("hidden");
   $('#min-rating-dropdown').addClass("hidden");
   $("#addItemButton").addClass("hidden");
 }
 function hideItemForm() {
-  console.log('*** function hideItemForm ***');
   $("#addItemButton").removeClass("hidden");
   if (store.items.length > 0) {
     $("#addItemButton").removeClass("hidden");
@@ -42,7 +40,6 @@ function hideItemForm() {
 }
 
 function displayMinimumRatingMenu() {
-  console.log('*** function displayMinimumRatingMenu ***');
   if (store.items.length > 0) {
     //$('#min-rating-dropdown').val("0");
     $('#min-rating-dropdown').removeClass("hidden");
@@ -53,8 +50,6 @@ function displayMinimumRatingMenu() {
 
 const itemList = (function () {
   function generateItemElement(item) {
-    console.log('***function generateItemElement ***');
-    //
     var rating = item.rating;
     var ratingString = "";
     for (var i = 1; i <= item.rating; i++)
@@ -127,20 +122,17 @@ const itemList = (function () {
   }
 
   function generateItemsString(itemList) {
-    console.log('*** function generateItemString ***');
     const items = itemList.map((item) => generateItemElement(item));
     return items.join('');
   }
 
   function handleHeaderClick() {
-    console.log('*** function handleHeaderClick ***');
     $('.js-bookmarks-list').on('click', '.bookmark-header', event => {
       $(event.currentTarget).next("article").toggleClass("hidden");
     });
   }
 
   function render() {
-    console.log('*** function render ***');
     // Filter item list if store prop is true by item.checked === false
     let items = store.items;
 
@@ -162,7 +154,7 @@ const itemList = (function () {
     $('.bookmarks-list').html(listItemsString);
 
     displayMinimumRatingMenu();
-    // If there are no items, then displayItemForm
+    // displayItemForm if there are no items
     if (!store.items.length) {
       displayItemForm()
       $('#cancelButton').hide();
@@ -172,14 +164,11 @@ const itemList = (function () {
   }
 
   function handleSubmitOrEditButton() {
-    console.log('*** function handleSubmitOrEditButton ***')
     $('#js-bookmark-form').submit(function (event) {
       event.preventDefault();
-      // need to pull id if editing, which will be available as '.js-bookmark-list-id'
+      // pull id from '.js-bookmark-list-id' if editing
       const id = $('.js-bookmark-list-id') && $('.js-bookmark-list-id').val();
       $('.js-bookmark-list-id').val('');
-
-      console.log('idddddd', id)
 
       const title = $('.js-bookmark-list-title').val();
       $('.js-bookmark-list-title').val('');
@@ -211,13 +200,11 @@ const itemList = (function () {
         item.id = id;
         store.editItem(Object.assign({}, item));
         api.editItem(id, item, (response) => {
-          console.log("edit item = ", item);
           $('.bookmarks-list').removeClass("hidden")
           render();
         });
       } else {
         api.createItem(item, (response) => {
-          console.log("new item = ", response);
           store.addItem(response);
           render();
         });
@@ -226,24 +213,20 @@ const itemList = (function () {
   }
 
   function getItemIdFromElement(item) {
-    console.log(' *** function getItemIdFromElement ***')
     return $(item)
       .closest('.bookmark-item')
       .data('item-id');
   }
 
   function handleDeleteItemClicked() {
-    console.log('*** function handleDeleteItemClicked ***');
     $('.js-bookmarks-list').on('click', '.remove-bookmark-button', event => {
       const newFormShown = $('#js-bookmark-form').hasClass("hidden");
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
       api.deleteItem(id, (response) => {
-        console.log(response);
         store.findAndDelete(id);
         // render the updated bookmark list
-        console.log(`Deleting-store.items.length`);
         render();
         (!$('#js-bookmark-form').hasClass("hidden")) && $('#min-rating-dropdown').addClass("hidden");
       });
@@ -251,7 +234,6 @@ const itemList = (function () {
   }
 
   function handleEditItemSubmit() {
-    console.log('*** function handleEditItemSubmit ***');
     $('.js-bookmarks-list').on('click', '.edit-bookmark-item', event => {
       event.preventDefault();
 
@@ -268,31 +250,18 @@ const itemList = (function () {
   }
 
   function handleNoteContentToggle() {
-    console.log('*** function handleNoteContentToggle ***');
     $('.js-filter-checked').click(() => {
       store.toggleCheckedFilter();
       render();
     });
   }
 
-  // function handleCancelClicked() {
-  //   console.log('* clicked sssss cancelButton to hideItemForm *');
-  //   $('#js-bookmark-form').submit(function (event) {
-  //     console.log('* clicked cancelButton to hideItemForm *');
-  //     if (store.items.length) {
-  //       hideItemForm();
-  //     }
-  //   })
-  // }
-
   function bindEventListeners() {
     handleSubmitOrEditButton();
-    // handleItemCheckClicked();
     handleDeleteItemClicked();
     handleEditItemSubmit();
     handleNoteContentToggle();
     handleHeaderClick();
-    // handleCancelClicked();
   }
 
   // This object contains the only exposed methods from this module:
