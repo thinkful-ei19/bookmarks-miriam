@@ -1,54 +1,53 @@
-'use strict';
+"use strict";
 /* global store */
 
 // eslint-disable-next-line no-unused-vars
 
-$("#addItemButton").click(function () {
-  $('#min-rating-dropdown').val("0").change();
-   displayItemForm();
-})
+$("#addItemButton").click(function() {
+  $("#min-rating-dropdown")
+    .val("0")
+    .change();
+  displayItemForm();
+});
 
-$("#cancelButton").click(function () {
+$("#cancelButton").click(function() {
   if (store.items.length) {
-    $('#min-rating-dropdown').removeClass("hidden");
+    $("#min-rating-dropdown").show();
     hideItemForm();
   }
-})
+});
 
-$('#min-rating-dropdown').on('change', event => {
+$("#min-rating-dropdown").on("change", event => {
   // change event returns a js event so
   // already contains a value
   store.minRating = parseInt(event.currentTarget.value, 10);
   itemList.render();
-})
+});
 
 function displayItemForm() {
   $(".js-bookmark-list-rating").prop("checked", false);
-  // $("#js-bookmark-form").show();
-  // $('#min-rating-dropdown').hide();
-  // $("#addItemButton").hide();
-  $("#js-bookmark-form").removeClass("hidden");
-  $('#min-rating-dropdown').addClass("hidden");
-  $("#addItemButton").addClass("hidden");
+  $("#js-bookmark-form").show();
+  $("#min-rating-dropdown").hide();
+  $("#addItemButton").hide();
 }
 function hideItemForm() {
-  $("#addItemButton").removeClass("hidden");
+  $("#addItemButton").show();
   if (store.items.length > 0) {
-    $("#addItemButton").removeClass("hidden");
+    $("#addItemButton").show();
   }
-  $("#js-bookmark-form").addClass("hidden");
+  $("#js-bookmark-form").hide();
 }
 
 function displayMinimumRatingMenu() {
   if (store.items.length > 0) {
     //$('#min-rating-dropdown').val("0");
-    $('#min-rating-dropdown').removeClass("hidden");
+    $("#min-rating-dropdown").show();
   } else {
-    $('#min-rating-dropdown').addClass("hidden");
+    $("#min-rating-dropdown").hide();
   }
 }
 
-const itemList = (function () {
+const itemList = (function() {
   function generateItemElement(item) {
     var rating = item.rating;
     var ratingString = "";
@@ -57,7 +56,6 @@ const itemList = (function () {
 
     for (var i = item.rating; i < 5; i++)
       ratingString += " <span>&#x2606</span>";
-
 
     return `
     <li class="bookmark-item" data-item-id="${item.id}">
@@ -71,29 +69,40 @@ const itemList = (function () {
         ${item.desc}
       </p>
       <p>
-        <span>Visit site: </span><a href="${item.url}" target="_blank">${item.url}</a>
+        <span>Visit site: </span><a href="${item.url}" target="_blank">${
+      item.url
+    }</a>
       </p>
     </article>
     <div class="rating">
       ${ratingString}
     </div>
-      
-    
+
+
   </li>`;
   }
 
   function generateItemForm(item) {
     return `
         <div class="side1">
-          <input type="hidden" value=${item.id} name="bookmark-id" class="js-bookmark-list-id"/>
+          <label for="js-bookmark-form-label">Edit Bookmark</label>
+          <input type="hidden" value=${
+            item.id
+          } name="bookmark-id" class="js-bookmark-list-id"/>
           <br>
-          <input type="text" value="${item.title}" name="bookmark-title" title="Title" class="js-bookmark-list-title" placeholder="e.g., Title" required/>
+          <input type="text" value="${
+            item.title
+          }" name="bookmark-title" title="Title" class="js-bookmark-list-title" placeholder="e.g., Title" required/>
 
-          <input type="text" value=${item.url} name="bookmark-url" title="URL" class="js-bookmark-list-url" placeholder="e.g., http://google.com" required/>
+          <input type="text" value=${
+            item.url
+          } name="bookmark-url" title="URL" class="js-bookmark-list-url" placeholder="e.g., http://google.com" required/>
 
           <br>
-          <textarea name="bookmark-description" rows="10" cols="80" title="Description" class="js-bookmark-list-description">${item.desc}</textarea>
-          
+          <textarea name="bookmark-description" rows="10" cols="80" title="Description" class="js-bookmark-list-description">${
+            item.desc
+          }</textarea>
+
         </div>
 
         <div class="side2">
@@ -117,76 +126,67 @@ const itemList = (function () {
         </div>
 
         <button title="Click to submit your bookmark" type="submit">Submit</button>
-        <button type="button" onclick='window.location.href="${window.location.href}"'>Cancel</button>
-      `
+        <button type="button" onclick='window.location.href="${
+          window.location.href
+        }"'>Cancel</button>
+      `;
   }
 
   function generateItemsString(itemList) {
-    const items = itemList.map((item) => generateItemElement(item));
-    return items.join('');
+    const items = itemList.map(item => generateItemElement(item));
+    return items.join("");
   }
 
   function handleHeaderClick() {
-    $('.js-bookmarks-list').on('click', '.bookmark-header', event => {
-      $(event.currentTarget).next("article").toggleClass("hidden");
+    $(".js-bookmarks-list").on("click", ".bookmark-header", event => {
+      $(event.currentTarget)
+        .next("article")
+        .toggleClass("hidden");
     });
   }
 
   function render() {
-    // Filter item list if store prop is true by item.checked === false
     let items = store.items;
 
-    // Filter item list if store prop `searchTerm` is not empty
-    // if (store.searchTerm) {
-    //   items = store.items.filter(item => item.name.includes(store.searchTerm));
-    // }
-    //
-    // Filter item list if minimum rating is non-null
-    if (store.minRating !== undefined) {
+    if (store.minRating) {
       items = store.items.filter(item => item.rating >= store.minRating);
     }
-
 
     // render the book list in the DOM
     const listItemsString = generateItemsString(items);
 
     // insert that HTML into the DOM
-    $('.bookmarks-list').html(listItemsString);
+    $(".bookmarks-list").html(listItemsString);
 
     displayMinimumRatingMenu();
     // displayItemForm if there are no items
     if (!store.items.length) {
-      displayItemForm()
-      $('#cancelButton').hide();
-    } else {
-      $('#cancelButton').show();
+      displayItemForm();
     }
   }
 
   function handleSubmitOrEditButton() {
-    $('#js-bookmark-form').submit(function (event) {
+    $("#js-bookmark-form").submit(function(event) {
       event.preventDefault();
       // pull id from '.js-bookmark-list-id' if editing
-      const id = $('.js-bookmark-list-id') && $('.js-bookmark-list-id').val();
-      $('.js-bookmark-list-id').val('');
+      const id = $(".js-bookmark-list-id") && $(".js-bookmark-list-id").val();
+      $(".js-bookmark-list-id").val("");
 
-      const title = $('.js-bookmark-list-title').val();
-      $('.js-bookmark-list-title').val('');
+      const title = $(".js-bookmark-list-title").val();
+      $(".js-bookmark-list-title").val("");
 
-      const url = $('.js-bookmark-list-url').val();
-      $('.js-bookmark-list-url').val('');
-
+      const url = $(".js-bookmark-list-url").val();
+      $(".js-bookmark-list-url").val("");
 
       if (!title || !title.trim() || !url || !url.trim()) {
-        $('.error').show();
+        $(".error").show();
         return false;
       }
 
       hideItemForm();
 
-      const description = $('.js-bookmark-list-description').val();
-      $('.js-bookmark-list-description').val('');
-
+      const description = $(".js-bookmark-list-description").val();
+      $(".js-bookmark-list-description").val("");
 
       const rating = $('input:radio[name="bookmark-rating"]:checked').val();
 
@@ -199,12 +199,12 @@ const itemList = (function () {
       if (id) {
         item.id = id;
         store.editItem(Object.assign({}, item));
-        api.editItem(id, item, (response) => {
-          $('.bookmarks-list').removeClass("hidden")
+        api.editItem(id, item, response => {
+          $(".bookmarks-list").show();
           render();
         });
       } else {
-        api.createItem(item, (response) => {
+        api.createItem(item, response => {
           store.addItem(response);
           render();
         });
@@ -214,43 +214,46 @@ const itemList = (function () {
 
   function getItemIdFromElement(item) {
     return $(item)
-      .closest('.bookmark-item')
-      .data('item-id');
+      .closest(".bookmark-item")
+      .data("item-id");
   }
 
   function handleDeleteItemClicked() {
-    $('.js-bookmarks-list').on('click', '.remove-bookmark-button', event => {
-      const newFormShown = $('#js-bookmark-form').hasClass("hidden");
+    $(".js-bookmarks-list").on("click", ".remove-bookmark-button", event => {
+      const newFormShown = $("#js-bookmark-form").hasClass("hidden");
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      api.deleteItem(id, (response) => {
+      api.deleteItem(id, response => {
         store.findAndDelete(id);
         // render the updated bookmark list
         render();
-        (!$('#js-bookmark-form').hasClass("hidden")) && $('#min-rating-dropdown').addClass("hidden");
+        !$("#js-bookmark-form").hasClass("hidden") &&
+          $("#min-rating-dropdown").hide();
       });
     });
   }
 
   function handleEditItemSubmit() {
-    $('.js-bookmarks-list').on('click', '.edit-bookmark-item', event => {
+    $(".js-bookmarks-list").on("click", ".edit-bookmark-item", event => {
       event.preventDefault();
 
       const id = getItemIdFromElement(event.currentTarget);
       const item = store.findById(id);
-      $('#min-rating-dropdown').addClass("hidden");
-      $("#addItemButton").addClass("hidden");
-      $('.bookmarks-list').addClass("hidden")
+      $("#min-rating-dropdown").hide();
+      $("#addItemButton").hide();
+      $(".bookmarks-list").hide();
       const editForm = generateItemForm(item);
-      $('#js-bookmark-form').removeClass("hidden");
-      $('#js-bookmark-form').html(editForm);
-      $(`.js-bookmark-list-rating[value=${item.rating}]`).prop("checked", "checked").trigger("click");      
+      $("#js-bookmark-form").show();
+      $("#js-bookmark-form").html(editForm);
+      $(`.js-bookmark-list-rating[value=${item.rating}]`)
+        .prop("checked", "checked")
+        .trigger("click");
     });
   }
 
   function handleNoteContentToggle() {
-    $('.js-filter-checked').click(() => {
+    $(".js-filter-checked").click(() => {
       store.toggleCheckedFilter();
       render();
     });
@@ -267,7 +270,6 @@ const itemList = (function () {
   // This object contains the only exposed methods from this module:
   return {
     render: render,
-    bindEventListeners: bindEventListeners,
+    bindEventListeners: bindEventListeners
   };
-
-}());
+})();
